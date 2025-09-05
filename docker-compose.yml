@@ -30,6 +30,7 @@ services:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/certbot/conf:/etc/letsencrypt
       - ./nginx/certbot/www:/var/www/certbot
+      - ./nginx/test:/var/www/test
     depends_on:
       - guacamole
 
