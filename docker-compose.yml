@@ -46,7 +46,7 @@ services:
       - certbot-conf:/etc/letsencrypt
       - certbot-www:/var/www/certbot
     depends_on:
-      - guacamole
+      - guacamole-web
 
   certbot:
     image: certbot/certbot
