@@ -16,8 +16,7 @@ services:
     depends_on:
       - guacd
     volumes:
-      - ./guacamole.properties:/etc/guacamole/guacamole.properties
-      - ./user-mapping.xml:/etc/guacamole/user-mapping.xml
+      - ./guac-config:/etc/guacamole
 
   nginx:
     image: nginx:latest
