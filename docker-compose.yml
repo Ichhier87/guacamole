@@ -19,7 +19,9 @@ services:
       - ./guac-config:/etc/guacamole
 
   nginx:
-    image: nginx:latest
+    build: 
+      context: ./nginx
+      dockerfile: Dockerfile
     platform: linux/arm64
     container_name: guacamole-nginx
     restart: unless-stopped
@@ -27,10 +29,8 @@ services:
       - "880:80"
       - "8443:443"
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/certbot/conf:/etc/letsencrypt
       - ./nginx/certbot/www:/var/www/certbot
-      - ./nginx/test:/var/www/test
     depends_on:
       - guacamole
 
