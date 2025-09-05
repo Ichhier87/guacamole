@@ -1,5 +1,5 @@
 # Use an ARM-compatible base image with Java and build tools
-FROM arm64/ubuntu:22.04
+FROM arm64v8/ubuntu:22.04
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
