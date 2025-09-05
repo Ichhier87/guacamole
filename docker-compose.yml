@@ -5,11 +5,17 @@ volumes:
   certbot-conf:
   certbot-www:
 
+networks:
+  guacamole-net:
+    driver: bridge
+
 services:
   guacd:
     image: guacamole/guacd:1.6.0
     container_name: guacd
     restart: unless-stopped
+    networks:
+      - guacamole-net
     ports:
       - "4822:4822"
 
@@ -17,6 +23,8 @@ services:
     build: .
     container_name: guacamole-web
     restart: unless-stopped
+    networks:
+      - guacamole-net
     depends_on:
       - guacd
     volumes:
@@ -29,6 +37,8 @@ services:
     platform: linux/arm64
     container_name: guacamole-nginx
     restart: unless-stopped
+    networks:
+      - guacamole-net
     ports:
       - "880:80"
       - "8443:443"
@@ -41,6 +51,8 @@ services:
   certbot:
     image: certbot/certbot
     container_name: certbot
+    networks:
+      - guacamole-net
     volumes:
       - certbot-conf:/etc/letsencrypt
       - certbot-www:/var/www/certbot
