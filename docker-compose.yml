@@ -6,9 +6,8 @@ volumes:
   certbot-www:
 
 networks:
-  default:
-    name: guacamole_guacamole-net
-    external: true
+  backend:
+    driver: bridge
 
 services:
   guacd:
@@ -16,22 +15,22 @@ services:
     container_name: guacd
     restart: unless-stopped
     networks:
-      - guacamole-net
+      - backend
     ports:
       - "4822:4822"
 
-  guacamole:
+  guacamole-web:
     build: .
     container_name: guacamole-web
     restart: unless-stopped
     networks:
-      - guacamole-net
+      - backend
     depends_on:
       - guacd
     volumes:
       - ./guac-config:/etc/guacamole
 
-  nginx:
+  guacamole-nginx:
     build: 
       context: ./nginx
       dockerfile: Dockerfile
@@ -39,7 +38,7 @@ services:
     container_name: guacamole-nginx
     restart: unless-stopped
     networks:
-      - guacamole-net
+      - backend
     ports:
       - "880:80"
       - "8443:443"
