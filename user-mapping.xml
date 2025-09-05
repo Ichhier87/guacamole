@@ -1,0 +1,11 @@
+<user-mapping>
+    <authorize username="ichhier" password="DueWCz314">
+        <connection name="Mein RDP">
+            <protocol>rdp</protocol>
+            <param name="hostname">192.168.178.186</param>
+            <param name="port">3389</param>
+            <param name="username">Dennis Lewin</param>
+            <param name="password">mtbqtui</param>
+        </connection>
+    </authorize>
+</user-mapping>

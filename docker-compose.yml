@@ -1,0 +1,45 @@
+
+version: '3.8'
+
+services:
+  guacd:
+    image: guacamole/guacd
+    container_name: guacd
+    restart: unless-stopped
+    ports:
+      - "4822:4822"
+
+  guacamole:
+    build: .
+    container_name: guacamole-web
+    restart: unless-stopped
+    depends_on:
+      - guacd
+    volumes:
+      - ./guacamole.properties:/etc/guacamole/guacamole.properties
+      - ./user-mapping.xml:/etc/guacamole/user-mapping.xml
+
+  nginx:
+    image: nginx:latest
+    container_name: guacamole-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/certbot/conf:/etc/letsencrypt
+      - ./nginx/certbot/www:/var/www/certbot
+    depends_on:
+      - guacamole
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./nginx/certbot/conf:/etc/letsencrypt
+      - ./nginx/certbot/www:/var/www/certbot
+    entrypoint: >
+      sh -c "certbot certonly --webroot --webroot-path=/var/www/certbot
+      --email deine@email.de --agree-tos --no-eff-email
+      -d deine-domain.de"
