@@ -3,8 +3,7 @@ version: '3.8'
 
 services:
   guacd:
-    image: guacamole/guacd
-    platform: linux/arm64
+    image: guacamole/guacd:1.6.0
     container_name: guacd
     restart: unless-stopped
     ports:
