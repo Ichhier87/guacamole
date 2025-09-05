@@ -24,7 +24,7 @@ services:
     container_name: guacamole-nginx
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "880:80"
       - "8443:443"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
