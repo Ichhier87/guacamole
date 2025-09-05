@@ -3,7 +3,7 @@ FROM arm64v8/ubuntu:22.04
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
-ENV GUAC_VERSION=1.5.5
+ENV GUAC_VERSION=1.6.0
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
