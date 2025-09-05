@@ -6,8 +6,9 @@ volumes:
   certbot-www:
 
 networks:
-  guacamole-net:
-    driver: bridge
+  default:
+    name: guacamole_guacamole-net
+    external: true
 
 services:
   guacd:
