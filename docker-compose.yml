@@ -14,10 +14,9 @@ services:
     image: guacamole/guacd:1.6.0
     container_name: guacd
     restart: unless-stopped
+    network_mode: host  # Dies erlaubt direkten Zugriff auf das Host-Netzwerk
     networks:
       - backend
-    ports:
-      - "4822:4822"
 
   guacamole:
     build: .
