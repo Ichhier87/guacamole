@@ -16,12 +16,13 @@ services:
     restart: unless-stopped
     network_mode: host
     environment:
+      - LOG_LEVEL=debug
       - GUACD_LOG_LEVEL=debug
+      - GUACD_SSL=false
     volumes:
       - ./drive:/drive
       - ./recordings:/recordings
-      - ./certs:/etc/guacamole/certs
-    command: ["-L", "debug"]
+    command: ["-L", "debug", "--no-ssl"]
 
   guacamole:
     build: .
