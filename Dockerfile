@@ -13,16 +13,8 @@ RUN apt-get update && apt-get install -y \
     libssl-dev libwebp-dev wget curl tomcat9 \
     && apt-get clean
 
-# Download and build guacamole-server
-RUN wget https://downloads.apache.org/guacamole/${GUAC_VERSION}/source/guacamole-server-${GUAC_VERSION}.tar.gz \
-    && tar -xzf guacamole-server-${GUAC_VERSION}.tar.gz \
-    && cd guacamole-server-${GUAC_VERSION} \
-    && ./configure \
-    && make \
-    && make install \
-    && ldconfig \
-    && cd .. \
-    && rm -rf guacamole-server-${GUAC_VERSION}*
+# We don't need to build guacamole-server in this container
+# as it runs in a separate container (guacd)
 
 # Download and deploy guacamole web application
 RUN wget https://downloads.apache.org/guacamole/${GUAC_VERSION}/binary/guacamole-${GUAC_VERSION}.war \
@@ -38,8 +30,8 @@ COPY user-mapping.xml /etc/guacamole/
 # Link configuration directory
 RUN ln -s /etc/guacamole /usr/share/tomcat9/.guacamole
 
-# Expose ports
-EXPOSE 8080 4822
+# Expose Tomcat port
+EXPOSE 8080
 
-# Start services
-CMD service guacd start && catalina.sh run
+# Start Tomcat
+CMD catalina.sh run
