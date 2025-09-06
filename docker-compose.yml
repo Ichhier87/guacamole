@@ -15,14 +15,15 @@ services:
     container_name: guacd
     restart: unless-stopped
     network_mode: host
+    privileged: true
     environment:
       - LOG_LEVEL=debug
+      - GUACD_SSL=false
     volumes:
       - ./drive:/drive
       - ./recordings:/recordings
-    command: ["-L", "debug", "-f"]
-    cap_add:
-      - NET_ADMIN
+      - /dev/net/tun:/dev/net/tun
+    command: ["-L", "debug"]
 
   guacamole:
     build: .

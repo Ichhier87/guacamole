@@ -4,74 +4,50 @@
             <protocol>rdp</protocol>
             <param name="hostname">192.168.178.186</param>
             <param name="port">3389</param>
-            <param name="username">Dennis Lewin</param>
-            <param name="password">mtbqtui</param>
+            <param name="username">&quot;Dennis Lewin&quot;</param>
+            <param name="password">&quot;mtbqtui&quot;</param>
             
-            <!-- Debug und Verbindungsparameter -->
+            <!-- Verbindungsparameter -->
+            <param name="security">rdp</param>
+            <param name="security-mode">rdp</param>
+            <param name="ignore-cert">true</param>
+            <param name="enable-nla">false</param>
+            <param name="disable-authentication">true</param>
+            
+            <!-- Laufwerkseinbindung -->
             <param name="enable-drive">true</param>
             <param name="create-drive-path">true</param>
             <param name="drive-path">/drive</param>
-            <param name="security">tls</param>
-            <param name="ignore-cert">true</param>
-            <param name="disable-auth">false</param>
+            
+            <!-- Tastatur und Layout -->
             <param name="server-layout">de-de-qwertz</param>
-            <param name="enable-nla">false</param>
-            <param name="disable-glyph-caching">true</param>
+            
+            <!-- Performance und Grafik -->
             <param name="color-depth">32</param>
-            <param name="force-lossless">true</param>
-            <param name="security-mode">any</param>
-            <param name="preconnection-id">1</param>
-            <param name="resize-method">display-update</param>
-            <param name="username-guest">false</param>
-            <param name="domain"></param>
-            <param name="password-guest">false</param>
-            <param name="disable-auth">false</param>
-            <param name="gateway-hostname"></param>
-            <param name="gateway-port">443</param>
-            <param name="gateway-username"></param>
-            <param name="gateway-password"></param>
-            <param name="gateway-domain"></param>
-            <param name="initial-program"></param>
-            <param name="client-name">guacamole-client</param>
-            <param name="enable-drive">true</param>
-            <param name="create-drive-path">true</param>
-            <param name="console">false</param>
-            <param name="console-audio">false</param>
-            <param name="server-layout">de-de-qwertz</param>
-            <param name="enable-wallpaper">false</param>
-            <param name="enable-theming">false</param>
-            <param name="enable-font-smoothing">true</param>
-            <param name="enable-full-window-drag">false</param>
-            <param name="enable-desktop-composition">false</param>
-            <param name="enable-menu-animations">false</param>
-            <param name="disable-bitmap-caching">true</param>
-            <param name="disable-offscreen-caching">true</param>
-            <param name="resize-method">display-update</param>
-            <param name="enable-desktop-composition">false</param>
-            <param name="enable-wallpaper">false</param>
-            <param name="enable-theming">false</param>
-            <param name="enable-font-smoothing">true</param>
-            <param name="enable-full-window-drag">false</param>
-            <param name="enable-menu-animations">false</param>
-            <param name="enable-nla">false</param>
             <param name="disable-glyph-caching">true</param>
             <param name="disable-bitmap-caching">true</param>
-            <param name="security-mode">rdp</param>
-            <param name="disable-authentication">true</param>
+            <param name="disable-offscreen-caching">true</param>
+            <param name="resize-method">display-update</param>
             <param name="enable-wallpaper">false</param>
             <param name="enable-theming">false</param>
             <param name="enable-font-smoothing">true</param>
             <param name="enable-full-window-drag">false</param>
             <param name="enable-desktop-composition">false</param>
             <param name="enable-menu-animations">false</param>
-            <param name="disable-bitmap-caching">true</param>
-            <param name="disable-offscreen-caching">true</param>
-            <param name="color-depth">16</param>
-            <!-- Debug-Log-Level -->
-            <param name="console-log-level">debug</param>
-            <!-- Verbindungs-Timeouts -->
+            
+            <!-- Audio -->
+            <param name="disable-audio">true</param>
+            <param name="console-audio">false</param>
+            
+            <!-- Client-Einstellungen -->
+            <param name="client-name">guacamole-client</param>
+            <param name="console">false</param>
+            
+            <!-- Timeout -->
             <param name="connect-timeout">15000</param>
-            <param name="preconnection-id">1</param>
+            
+            <!-- Debug -->
+            <param name="console-log-level">debug</param>
         </connection>
     </authorize>
 </user-mapping>
