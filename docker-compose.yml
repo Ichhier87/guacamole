@@ -26,10 +26,8 @@ services:
     networks:
       - backend
     environment:
-      - GUACD_HOSTNAME=host.docker.internal
+      - GUACD_HOSTNAME=172.17.0.1
       - GUACD_PORT=4822
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     depends_on:
       - guacd
 
