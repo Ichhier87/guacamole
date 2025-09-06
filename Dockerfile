@@ -49,8 +49,8 @@ RUN mkdir -p /etc/guacamole && \
     chown -R tomcat:tomcat /etc/guacamole
 
 # Add default configuration files
-COPY guacamole.properties /etc/guacamole/
-COPY user-mapping.xml /etc/guacamole/
+COPY guac-config/guacamole.properties /etc/guacamole/
+COPY guac-config/user-mapping.xml /etc/guacamole/
 
 # Fix permissions again after copying config files
 RUN chown -R tomcat:tomcat /etc/guacamole
