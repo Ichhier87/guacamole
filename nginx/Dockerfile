@@ -1,19 +1,15 @@
 FROM nginxinc/nginx-unprivileged:1.24-alpine-slim
 
 USER root
-# Remove default nginx config
-RUN rm /etc/nginx/conf.d/default.conf
+# Create necessary directories
+RUN mkdir -p /var/www/test /var/www/certbot
 
-# Copy nginx configuration files
-COPY conf.d/ /etc/nginx/conf.d/
+# Copy configuration and test files
+COPY conf.d/default.conf /etc/nginx/conf.d/
+COPY test/firewall-test.txt /var/www/test/
 
-# Copy test files
-COPY test/ /var/www/test/
-
-# Create directories for certbot and fix permissions
-RUN mkdir -p /var/www/certbot && \
-    # Fix permissions for nginx user
-    chown -R nginx:nginx /var/www && \
+# Set permissions
+RUN chown -R nginx:nginx /var/www && \
     chown -R nginx:nginx /etc/nginx/conf.d
 
 # Switch back to non-root user
