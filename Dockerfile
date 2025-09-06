@@ -29,28 +29,30 @@ RUN mkdir -p /usr/share/tomcat9/webapps && \
     wget https://downloads.apache.org/guacamole/${GUAC_VERSION}/binary/guacamole-${GUAC_VERSION}.war \
     && mv guacamole-${GUAC_VERSION}.war guacamole.war
 
-# Set GUACAMOLE_HOME
+# Set GUACAMOLE_HOME and ensure it exists with proper permissions
 ENV GUACAMOLE_HOME=/etc/guacamole
+RUN mkdir -p ${GUACAMOLE_HOME} && \
+    chown -R root:root ${GUACAMOLE_HOME} && \
+    chmod 755 ${GUACAMOLE_HOME}
 
 # Set environment variables for Tomcat
 ENV CATALINA_HOME=/usr/share/tomcat9
 ENV CATALINA_BASE=/usr/share/tomcat9
 ENV PATH=$CATALINA_HOME/bin:$PATH
 
-# Create configuration directory and set permissions
-RUN mkdir -p /etc/guacamole && \
-    mkdir -p /usr/share/tomcat9/webapps && \
+# Create Tomcat directories and set permissions
+RUN mkdir -p /usr/share/tomcat9/webapps && \
     mkdir -p /usr/share/tomcat9/work && \
     mkdir -p /usr/share/tomcat9/temp && \
     mkdir -p /usr/share/tomcat9/logs && \
     chmod +x /usr/share/tomcat9/bin/*.sh && \
-    # Set correct permissions
-    chown -R tomcat:tomcat /usr/share/tomcat9 && \
-    chown -R tomcat:tomcat /etc/guacamole
+    chown -R tomcat:tomcat /usr/share/tomcat9
 
-# Add default configuration files
-COPY guac-config/guacamole.properties /etc/guacamole/
-COPY guac-config/user-mapping.xml /etc/guacamole/
+# Add configuration files and set proper permissions
+COPY guac-config/guacamole.properties ${GUACAMOLE_HOME}/
+COPY guac-config/user-mapping.xml ${GUACAMOLE_HOME}/
+RUN chown -R root:root ${GUACAMOLE_HOME}/* && \
+    chmod 644 ${GUACAMOLE_HOME}/*
 
 # Fix permissions again after copying config files
 RUN chown -R tomcat:tomcat /etc/guacamole
