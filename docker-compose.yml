@@ -53,17 +53,32 @@ services:
       - certbot-conf:/etc/letsencrypt:ro
       - certbot-www:/var/www/certbot:ro
     depends_on:
-      certbot:
+      certbot-init:
         condition: service_completed_successfully
       guacamole:
         condition: service_started
 
-  certbot:
+  certbot-init:
     image: certbot/certbot
-    container_name: certbot
+    container_name: certbot-init
+    networks:
+      - backend
+    volumes:
+      - certbot-conf:/etc/letsencrypt
+      - certbot-www:/var/www/certbot
+    command: certonly --webroot --webroot-path=/var/www/certbot --email dennislewin@gmx.de --agree-tos --no-eff-email -d home.dl-dev.de --non-interactive
+
+  certbot-renew:
+    image: certbot/certbot
+    container_name: certbot-renew
     networks:
       - backend
     volumes:
       - certbot-conf:/etc/letsencrypt
       - certbot-www:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; chmod -R 755 /etc/letsencrypt; sleep 12h & wait $${!}; done;'"
+    depends_on:
+      certbot-init:
+        condition: service_completed_successfully
+      nginx:
+        condition: service_started
