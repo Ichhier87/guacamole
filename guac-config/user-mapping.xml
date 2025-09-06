@@ -50,7 +50,7 @@
             <param name="connect-timeout">15000</param>
             
             <!-- Debug -->
-            <param name="console-log-level">debug</param>
+            <param name="console-log-level">error</param>
         </connection>
     </authorize>
 </user-mapping>
