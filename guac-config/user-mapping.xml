@@ -11,7 +11,7 @@
             <param name="enable-drive">true</param>
             <param name="create-drive-path">true</param>
             <param name="drive-path">/drive</param>
-            <param name="security">rdp</param>
+            <param name="security">tls</param>
             <param name="ignore-cert">true</param>
             <param name="disable-auth">false</param>
             <param name="server-layout">de-de-qwertz</param>
@@ -19,8 +19,9 @@
             <param name="disable-glyph-caching">true</param>
             <param name="color-depth">32</param>
             <param name="force-lossless">true</param>
-            <param name="security-mode">rdp</param>
-            <param name="preconnection-blob">2</param>
+            <param name="security-mode">any</param>
+            <param name="preconnection-id">1</param>
+            <param name="resize-method">display-update</param>
             <param name="username-guest">false</param>
             <param name="domain"></param>
             <param name="password-guest">false</param>
