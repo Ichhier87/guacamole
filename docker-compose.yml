@@ -17,12 +17,10 @@ services:
     network_mode: host
     environment:
       - LOG_LEVEL=debug
-      - GUACD_LOG_LEVEL=debug
-      - GUACD_SSL=false
     volumes:
       - ./drive:/drive
       - ./recordings:/recordings
-    command: ["-L", "debug", "--no-ssl"]
+    command: ["-L", "debug"]
 
   guacamole:
     build: .
