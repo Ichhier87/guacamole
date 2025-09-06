@@ -48,10 +48,16 @@ RUN mkdir -p /usr/share/tomcat9/webapps && \
     chmod +x /usr/share/tomcat9/bin/*.sh && \
     chown -R tomcat:tomcat /usr/share/tomcat9
 
+# Debug: List contents of build context
+RUN pwd && ls -la
+
 # Add configuration files and set proper permissions
 COPY guac-config/guacamole.properties ${GUACAMOLE_HOME}/
 COPY guac-config/user-mapping.xml ${GUACAMOLE_HOME}/
-RUN chown -R root:root ${GUACAMOLE_HOME}/* && \
+
+# Verify files were copied and set permissions
+RUN ls -la ${GUACAMOLE_HOME}/ && \
+    chown -R root:root ${GUACAMOLE_HOME}/* && \
     chmod 644 ${GUACAMOLE_HOME}/*
 
 # Fix permissions again after copying config files

@@ -27,8 +27,6 @@ services:
       - backend
     depends_on:
       - guacd
-    volumes:
-      - ./guac-config:/etc/guacamole
 
   nginx:
     build: 
