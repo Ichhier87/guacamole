@@ -16,7 +16,6 @@ services:
     restart: unless-stopped
     networks:
       - backend
-    network_mode: bridge
     ports:
       - "4822:4822"
     extra_hosts:
