@@ -20,6 +20,9 @@ services:
       - "4822:4822"
     extra_hosts:
       - "host.docker.internal:host-gateway"  # Erlaubt Zugriff auf das Host-Netzwerk
+    environment:
+      - GUACD_LOG_LEVEL=debug
+    command: ["-L", "debug"]
 
   guacamole:
     build: .

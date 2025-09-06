@@ -6,6 +6,27 @@
             <param name="port">3389</param>
             <param name="username">Dennis Lewin</param>
             <param name="password">mtbqtui</param>
+            
+            <!-- Debug und Verbindungsparameter -->
+            <param name="enable-drive">true</param>
+            <param name="create-drive-path">true</param>
+            <param name="security">any</param>
+            <param name="ignore-cert">true</param>
+            <param name="disable-auth">false</param>
+            <param name="enable-wallpaper">false</param>
+            <param name="enable-theming">false</param>
+            <param name="enable-font-smoothing">true</param>
+            <param name="enable-full-window-drag">false</param>
+            <param name="enable-desktop-composition">false</param>
+            <param name="enable-menu-animations">false</param>
+            <param name="disable-bitmap-caching">true</param>
+            <param name="disable-offscreen-caching">true</param>
+            <param name="color-depth">16</param>
+            <!-- Debug-Log-Level -->
+            <param name="console-log-level">debug</param>
+            <!-- Verbindungs-Timeouts -->
+            <param name="connect-timeout">15000</param>
+            <param name="preconnection-id">1</param>
         </connection>
     </authorize>
 </user-mapping>
