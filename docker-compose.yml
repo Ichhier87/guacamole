@@ -50,10 +50,13 @@ services:
       - "880:80"
       - "8443:443"
     volumes:
-      - certbot-conf:/etc/letsencrypt
-      - certbot-www:/var/www/certbot
+      - certbot-conf:/etc/letsencrypt:ro
+      - certbot-www:/var/www/certbot:ro
     depends_on:
-      - guacamole
+      certbot:
+        condition: service_completed_successfully
+      guacamole:
+        condition: service_started
 
   certbot:
     image: certbot/certbot
@@ -63,7 +66,4 @@ services:
     volumes:
       - certbot-conf:/etc/letsencrypt
       - certbot-www:/var/www/certbot
-    entrypoint: >
-      sh -c "certbot certonly --webroot --webroot-path=/var/www/certbot
-      --email dennislewin@gmx.de --agree-tos --no-eff-email
-      -d home.dl-dev.de"
+    command: certonly --webroot --webroot-path=/var/www/certbot --email dennislewin@gmx.de --agree-tos --no-eff-email -d home.dl-dev.de --non-interactive
