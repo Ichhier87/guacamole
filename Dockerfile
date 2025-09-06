@@ -20,8 +20,14 @@ RUN apt-get update && apt-get install -y \
 RUN wget https://downloads.apache.org/guacamole/${GUAC_VERSION}/binary/guacamole-${GUAC_VERSION}.war \
     && mv guacamole-${GUAC_VERSION}.war /var/lib/tomcat9/webapps/guacamole.war
 
+# Set environment variables for Tomcat
+ENV CATALINA_HOME=/usr/share/tomcat9
+ENV PATH=$CATALINA_HOME/bin:$PATH
+
 # Create configuration directory
-RUN mkdir -p /etc/guacamole /usr/share/tomcat9/.guacamole
+RUN mkdir -p /etc/guacamole /usr/share/tomcat9/.guacamole && \
+    # Fix Tomcat permissions
+    chmod +x /usr/share/tomcat9/bin/*.sh
 
 # Add default configuration files
 COPY guacamole.properties /etc/guacamole/
@@ -34,4 +40,4 @@ RUN ln -s /etc/guacamole /usr/share/tomcat9/.guacamole
 EXPOSE 8080
 
 # Start Tomcat
-CMD catalina.sh run
+CMD ["/usr/share/tomcat9/bin/catalina.sh", "run"]
