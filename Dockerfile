@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     build-essential libcairo2-dev libjpeg-turbo8-dev libpng-dev libtool-bin \
     libossp-uuid-dev libavcodec-dev libavutil-dev libswscale-dev freerdp2-dev \
     libpango1.0-dev libssh2-1-dev libtelnet-dev libvncserver-dev libpulse-dev \
-    libssl-dev libwebp-dev wget curl tomcat9 \
+    libssl-dev libwebp-dev wget curl tomcat9 unzip \
     && apt-get clean
 
 # Copy Tomcat configuration files
@@ -24,8 +24,10 @@ COPY tomcat-config/server.xml /usr/share/tomcat9/conf/
 # as it runs in a separate container (guacd)
 
 # Download and deploy guacamole web application
-RUN wget https://downloads.apache.org/guacamole/${GUAC_VERSION}/binary/guacamole-${GUAC_VERSION}.war \
-    && mv guacamole-${GUAC_VERSION}.war /var/lib/tomcat9/webapps/guacamole.war
+RUN mkdir -p /var/lib/tomcat9/webapps/guacamole && \
+    wget https://downloads.apache.org/guacamole/${GUAC_VERSION}/binary/guacamole-${GUAC_VERSION}.war \
+    && unzip -o guacamole-${GUAC_VERSION}.war -d /var/lib/tomcat9/webapps/guacamole/ \
+    && rm guacamole-${GUAC_VERSION}.war
 
 # Set environment variables for Tomcat
 ENV CATALINA_HOME=/usr/share/tomcat9
