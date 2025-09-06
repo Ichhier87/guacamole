@@ -13,6 +13,13 @@ RUN apt-get update && apt-get install -y \
     libssl-dev libwebp-dev wget curl tomcat9 \
     && apt-get clean
 
+# Copy Tomcat configuration files
+RUN mkdir -p /usr/share/tomcat9/conf && \
+    cp -r /etc/tomcat9/* /usr/share/tomcat9/conf/ || true
+
+# Copy our backup server.xml if the copy failed
+COPY tomcat-config/server.xml /usr/share/tomcat9/conf/
+
 # We don't need to build guacamole-server in this container
 # as it runs in a separate container (guacd)
 
@@ -22,12 +29,17 @@ RUN wget https://downloads.apache.org/guacamole/${GUAC_VERSION}/binary/guacamole
 
 # Set environment variables for Tomcat
 ENV CATALINA_HOME=/usr/share/tomcat9
+ENV CATALINA_BASE=/usr/share/tomcat9
 ENV PATH=$CATALINA_HOME/bin:$PATH
 
 # Create configuration directory
 RUN mkdir -p /etc/guacamole /usr/share/tomcat9/.guacamole && \
     # Fix Tomcat permissions
-    chmod +x /usr/share/tomcat9/bin/*.sh
+    chmod +x /usr/share/tomcat9/bin/*.sh && \
+    # Create necessary Tomcat directories
+    mkdir -p /usr/share/tomcat9/webapps /usr/share/tomcat9/work /usr/share/tomcat9/temp /usr/share/tomcat9/logs && \
+    # Set correct permissions
+    chown -R root:root /usr/share/tomcat9
 
 # Add default configuration files
 COPY guacamole.properties /etc/guacamole/
