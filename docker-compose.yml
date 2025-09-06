@@ -17,10 +17,14 @@ services:
     network_mode: host
     environment:
       - LOG_LEVEL=debug
+      - GUACAMOLE_HOME=/etc/guacamole
     volumes:
       - ./drive:/drive
       - ./recordings:/recordings
-    command: ["-L", "debug"]
+      - /etc/hosts:/etc/hosts:ro
+    command: ["-L", "debug", "-b", "0.0.0.0", "-l", "4822"]
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   guacamole:
     build: .
