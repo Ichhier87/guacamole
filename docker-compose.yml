@@ -19,9 +19,9 @@ services:
     ports:
       - "4822:4822"
 
-  guacamole-web:
+  guacamole:
     build: .
-    container_name: guacamole-web
+    container_name: guacamole
     restart: unless-stopped
     networks:
       - backend
@@ -30,12 +30,12 @@ services:
     volumes:
       - ./guac-config:/etc/guacamole
 
-  guacamole-nginx:
+  nginx:
     build: 
       context: ./nginx
       dockerfile: Dockerfile
     platform: linux/arm64
-    container_name: guacamole-nginx
+    container_name: nginx
     restart: unless-stopped
     networks:
       - backend
@@ -46,7 +46,7 @@ services:
       - certbot-conf:/etc/letsencrypt
       - certbot-www:/var/www/certbot
     depends_on:
-      - guacamole-web
+      - guacamole
 
   certbot:
     image: certbot/certbot
