@@ -15,6 +15,9 @@
             <param name="ignore-cert">true</param>
             <param name="disable-auth">false</param>
             <param name="server-layout">de-de-qwertz</param>
+            <param name="enable-nla">false</param>
+            <param name="cert-tofu">true</param>
+            <param name="trust-on-first-use">true</param>
             <param name="disable-glyph-caching">true</param>
             <param name="disable-bitmap-caching">true</param>
             <param name="truststore-path">/etc/guacamole/certs</param>
