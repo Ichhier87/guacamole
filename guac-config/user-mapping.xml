@@ -14,6 +14,11 @@
             <param name="security">any</param>
             <param name="ignore-cert">true</param>
             <param name="disable-auth">false</param>
+            <param name="server-layout">de-de-qwertz</param>
+            <param name="disable-glyph-caching">true</param>
+            <param name="disable-bitmap-caching">true</param>
+            <param name="truststore-path">/etc/guacamole/certs</param>
+            <param name="truststore-type">directory</param>
             <param name="enable-wallpaper">false</param>
             <param name="enable-theming">false</param>
             <param name="enable-font-smoothing">true</param>
