@@ -24,34 +24,42 @@ COPY tomcat-config/server.xml /usr/share/tomcat9/conf/
 # as it runs in a separate container (guacd)
 
 # Download and deploy guacamole web application
-RUN mkdir -p /var/lib/tomcat9/webapps/guacamole && \
+RUN mkdir -p /usr/share/tomcat9/webapps && \
+    cd /usr/share/tomcat9/webapps && \
     wget https://downloads.apache.org/guacamole/${GUAC_VERSION}/binary/guacamole-${GUAC_VERSION}.war \
-    && unzip -o guacamole-${GUAC_VERSION}.war -d /var/lib/tomcat9/webapps/guacamole/ \
-    && rm guacamole-${GUAC_VERSION}.war
+    && mv guacamole-${GUAC_VERSION}.war guacamole.war
+
+# Set GUACAMOLE_HOME
+ENV GUACAMOLE_HOME=/etc/guacamole
 
 # Set environment variables for Tomcat
 ENV CATALINA_HOME=/usr/share/tomcat9
 ENV CATALINA_BASE=/usr/share/tomcat9
 ENV PATH=$CATALINA_HOME/bin:$PATH
 
-# Create configuration directory
-RUN mkdir -p /etc/guacamole /usr/share/tomcat9/.guacamole && \
-    # Fix Tomcat permissions
+# Create configuration directory and set permissions
+RUN mkdir -p /etc/guacamole && \
+    mkdir -p /usr/share/tomcat9/webapps && \
+    mkdir -p /usr/share/tomcat9/work && \
+    mkdir -p /usr/share/tomcat9/temp && \
+    mkdir -p /usr/share/tomcat9/logs && \
     chmod +x /usr/share/tomcat9/bin/*.sh && \
-    # Create necessary Tomcat directories
-    mkdir -p /usr/share/tomcat9/webapps /usr/share/tomcat9/work /usr/share/tomcat9/temp /usr/share/tomcat9/logs && \
     # Set correct permissions
-    chown -R root:root /usr/share/tomcat9
+    chown -R tomcat:tomcat /usr/share/tomcat9 && \
+    chown -R tomcat:tomcat /etc/guacamole
 
 # Add default configuration files
 COPY guacamole.properties /etc/guacamole/
 COPY user-mapping.xml /etc/guacamole/
 
-# Link configuration directory
-RUN ln -s /etc/guacamole /usr/share/tomcat9/.guacamole
+# Fix permissions again after copying config files
+RUN chown -R tomcat:tomcat /etc/guacamole
+
+# Switch to tomcat user
+USER tomcat
 
 # Expose Tomcat port
 EXPOSE 8080
 
-# Start Tomcat
-CMD ["/usr/share/tomcat9/bin/catalina.sh", "run"]
+# Start Tomcat with debugging enabled
+CMD CATALINA_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n" /usr/share/tomcat9/bin/catalina.sh run
