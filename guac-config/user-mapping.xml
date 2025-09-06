@@ -4,15 +4,18 @@
             <protocol>rdp</protocol>
             <param name="hostname">192.168.178.186</param>
             <param name="port">3389</param>
-            <param name="username">&quot;Dennis Lewin&quot;</param>
-            <param name="password">&quot;mtbqtui&quot;</param>
+            <param name="username">Dennis Lewin</param>
+            <param name="password">mtbqtui</param>
             
             <!-- Verbindungsparameter -->
-            <param name="security">rdp</param>
-            <param name="security-mode">rdp</param>
+            <param name="security">any</param>
             <param name="ignore-cert">true</param>
-            <param name="enable-nla">false</param>
-            <param name="disable-authentication">true</param>
+            <param name="enable-nla">true</param>
+            <param name="disable-authentication">false</param>
+            <param name="username-guest">false</param>
+            <param name="domain"></param>
+            <param name="password-guest">false</param>
+            <param name="cert-tofu">true</param>
             
             <!-- Laufwerkseinbindung -->
             <param name="enable-drive">true</param>
