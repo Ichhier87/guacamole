@@ -17,6 +17,9 @@ services:
     network_mode: host
     environment:
       - GUACD_LOG_LEVEL=debug
+    volumes:
+      - ./drive:/drive
+      - ./recordings:/recordings
     command: ["-L", "debug"]
 
   guacamole:

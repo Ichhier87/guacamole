@@ -10,6 +10,7 @@
             <!-- Debug und Verbindungsparameter -->
             <param name="enable-drive">true</param>
             <param name="create-drive-path">true</param>
+            <param name="drive-path">/drive</param>
             <param name="security">any</param>
             <param name="ignore-cert">true</param>
             <param name="disable-auth">false</param>
