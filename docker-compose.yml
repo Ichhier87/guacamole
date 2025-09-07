@@ -28,6 +28,8 @@ services:
   guacamole:
     build: .
     container_name: guacamole
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     restart: unless-stopped
     networks:
       - backend
