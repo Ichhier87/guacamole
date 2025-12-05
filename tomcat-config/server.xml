@@ -7,13 +7,25 @@
   <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
 
   <Service name="Catalina">
-    <Connector port="8080" protocol="HTTP/1.1"
+    <Connector port="8080" protocol="org.apache.coyote.http11.Http11NioProtocol"
+               maxThreads="200"
+               minSpareThreads="25"
+               maxConnections="10000"
+               acceptCount="100"
                connectionTimeout="20000"
-               redirectPort="8443" />
+               keepAliveTimeout="60000"
+               maxKeepAliveRequests="100"
+               compression="on"
+               compressionMinSize="2048"
+               compressibleMimeType="text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json"
+               redirectPort="8443"
+               URIEncoding="UTF-8"
+               enableLookups="false"
+               disableUploadTimeout="true" />
 
     <Engine name="Catalina" defaultHost="localhost">
       <Host name="localhost"  appBase="webapps"
-            unpackWARs="true" autoDeploy="true">
+            unpackWARs="true" autoDeploy="false">
       </Host>
     </Engine>
   </Service>

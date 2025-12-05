@@ -17,13 +17,13 @@ services:
     network_mode: host
     privileged: true
     environment:
-      - LOG_LEVEL=debug
+      - LOG_LEVEL=info
       - GUACD_SSL=false
     volumes:
       - ./drive:/drive
       - ./recordings:/recordings
       - /dev/net/tun:/dev/net/tun
-    command: ["-L", "debug"]
+    command: ["-L", "info"]
 
   guacamole:
     build: .
@@ -40,7 +40,7 @@ services:
       - guacd
 
   nginx:
-    build: 
+    build:
       context: ./nginx
       dockerfile: Dockerfile
     platform: linux/arm64
@@ -54,6 +54,7 @@ services:
     volumes:
       - certbot-conf:/etc/letsencrypt:ro
       - certbot-www:/var/www/certbot:ro
+      - ./extensions/mobile:/etc/nginx/mobile-extensions:ro
     depends_on:
       certbot-init:
         condition: service_completed_successfully
@@ -78,7 +79,8 @@ services:
     volumes:
       - certbot-conf:/etc/letsencrypt
       - certbot-www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; chmod -R 755 /etc/letsencrypt; sleep 12h & wait $${!}; done;'"
+      - ./certbot-scripts:/scripts:ro
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --deploy-hook \"touch /etc/letsencrypt/reload-required\" && chmod -R 755 /etc/letsencrypt; sleep 12h & wait $${!}; done;'"
     depends_on:
       certbot-init:
         condition: service_completed_successfully

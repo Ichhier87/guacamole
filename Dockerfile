@@ -69,5 +69,5 @@ USER tomcat
 # Expose Tomcat port
 EXPOSE 8080
 
-# Start Tomcat with debugging enabled
-CMD CATALINA_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n" /usr/share/tomcat9/bin/catalina.sh run
+# Start Tomcat with optimized JVM settings
+CMD CATALINA_OPTS="-Xms512m -Xmx2048m -XX:+UseG1GC -XX:+UseStringDeduplication -XX:MaxGCPauseMillis=200 -Djava.awt.headless=true -Dfile.encoding=UTF-8 -server" /usr/share/tomcat9/bin/catalina.sh run
