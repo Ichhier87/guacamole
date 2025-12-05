@@ -25,18 +25,32 @@
             <!-- Tastatur und Layout -->
             <param name="server-layout">de-de-qwertz</param>
             
-            <!-- Performance und Grafik -->
+            <!-- Performance und Grafik (HW-H.264-optimiert) -->
+            <!-- 32-bit für H.264 (Hardware-Encoder nutzt volle Farbtiefe effizienter) -->
             <param name="color-depth">32</param>
-            <param name="disable-glyph-caching">true</param>
-            <param name="disable-bitmap-caching">true</param>
-            <param name="disable-offscreen-caching">true</param>
+            <param name="disable-glyph-caching">false</param>
+            <param name="disable-bitmap-caching">false</param>
+            <param name="disable-offscreen-caching">false</param>
             <param name="resize-method">display-update</param>
             <param name="enable-wallpaper">false</param>
             <param name="enable-theming">false</param>
-            <param name="enable-font-smoothing">true</param>
+            <param name="enable-font-smoothing">false</param>
             <param name="enable-full-window-drag">false</param>
             <param name="enable-desktop-composition">false</param>
             <param name="enable-menu-animations">false</param>
+
+            <!-- RDP Performance Optimierungen -->
+            <param name="enable-compression">true</param>
+            <param name="force-lossless">false</param>
+
+            <!-- Hardware-beschleunigtes Video-Encoding (Rockchip RK3568) -->
+            <!-- H.264 ist VIEL schneller als JPEG auf ARM mit HW-Encoder -->
+            <param name="enable-gfx">true</param>
+            <param name="gfx-h264">true</param>
+            <param name="gfx-ignore-order">false</param>
+
+            <!-- Video-Quality Settings -->
+            <param name="video-optimization">true</param>
             
             <!-- Audio -->
             <param name="disable-audio">true</param>
@@ -48,7 +62,15 @@
             
             <!-- Timeout -->
             <param name="connect-timeout">15000</param>
-            
+
+            <!-- Bildschirm-Optimierungen für ARM-Performance -->
+            <param name="width">1920</param>
+            <param name="height">1080</param>
+            <param name="dpi">96</param>
+
+            <!-- Performance-Tuning -->
+            <param name="preconnection-blob"></param>
+
             <!-- Debug -->
             <param name="console-log-level">error</param>
         </connection>
