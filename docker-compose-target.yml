@@ -1,0 +1,48 @@
+version: '3.8'
+
+networks:
+  backend:
+    driver: bridge
+
+services:
+  guacd:
+    image: guacamole/guacd:1.6.0
+    container_name: guacd
+    restart: unless-stopped
+    network_mode: host
+    privileged: true
+    environment:
+      - LOG_LEVEL=info
+      - GUACD_SSL=false
+      # Hardware-Video-Encoding für Rockchip RK3568
+      - LIBVA_DRIVER_NAME=rockchip
+      - LIBVA_DRIVERS_PATH=/usr/lib/aarch64-linux-gnu/dri
+    volumes:
+      - ./drive:/drive
+      - ./recordings:/recordings
+      - /dev/net/tun:/dev/net/tun
+      # Rockchip Video-Hardware-Geräte
+      - /dev/dri:/dev/dri
+      - /dev/dma_heap:/dev/dma_heap
+      - /dev/mpp_service:/dev/mpp_service
+    devices:
+      - /dev/dri:/dev/dri
+      - /dev/video0:/dev/video0
+    command: ["-L", "info"]
+
+  guacamole:
+    build: .
+    container_name: guacamole
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+    networks:
+      - backend
+    ports:
+      # Port für externen Zugriff vom Server
+      - "8080:8080"
+    environment:
+      - GUACD_HOSTNAME=172.17.0.1
+      - GUACD_PORT=4822
+    depends_on:
+      - guacd
