@@ -1,29 +1,19 @@
-version: '3.8'
-
 networks:
   backend:
     driver: bridge
 
 services:
   guacd:
-    build:
-      context: .
-      dockerfile: Dockerfile.guacd-x64
+    image: guacamole/guacd:1.6.0
     container_name: guacd
     restart: unless-stopped
     network_mode: host
     environment:
       - LOG_LEVEL=info
       - GUACD_SSL=false
-      # Hardware-Video-Encoding für AMD Ryzen 6800H (Radeon 680M)
-      - LIBVA_DRIVER_NAME=radeonsi
     volumes:
       - ./drive:/drive
       - ./recordings:/recordings
-      # GPU-Zugriff für Hardware-Encoding
-      - /dev/dri:/dev/dri
-    devices:
-      - /dev/dri:/dev/dri
     command: ["-L", "info"]
 
   guacamole:
