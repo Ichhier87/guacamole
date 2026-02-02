@@ -1,13 +1,27 @@
 # guacd mit VA-API Support für AMD Ryzen (Radeon)
-FROM guacamole/guacd:1.6.0
+FROM debian:bookworm-slim
 
-USER root
+ENV GUAC_VERSION=1.6.0
 
-# VA-API Hardware-Encoding Treiber für AMD (Alpine Linux)
-RUN apk add --no-cache \
-    mesa-va-gallium \
-    libva-intel-driver \
-    libva \
-    libva-utils
+# guacd und VA-API Treiber installieren
+RUN apt-get update && apt-get install -y \
+    guacd \
+    libguac-client-rdp0 \
+    libguac-client-vnc0 \
+    libguac-client-ssh0 \
+    libguac-client-telnet0 \
+    # VA-API Hardware-Encoding für AMD Radeon
+    mesa-va-drivers \
+    vainfo \
+    libva2 \
+    libva-drm2 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# guacd User erstellen
+RUN useradd -r -s /sbin/nologin guacd || true
+
+EXPOSE 4822
 
 USER guacd
+CMD ["guacd", "-b", "0.0.0.0", "-f"]
