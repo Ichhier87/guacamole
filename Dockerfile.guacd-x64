@@ -3,13 +3,11 @@ FROM guacamole/guacd:1.6.0
 
 USER root
 
-# VA-API Hardware-Encoding Treiber für AMD
-RUN apt-get update && apt-get install -y \
-    mesa-va-drivers \
-    vainfo \
-    libva2 \
-    libva-drm2 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# VA-API Hardware-Encoding Treiber für AMD (Alpine Linux)
+RUN apk add --no-cache \
+    mesa-va-gallium \
+    libva-intel-driver \
+    libva \
+    libva-utils
 
 USER guacd
