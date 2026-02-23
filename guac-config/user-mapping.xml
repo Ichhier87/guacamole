@@ -47,7 +47,8 @@
             <param name="gfx-h264">true</param>
             
             <!-- Audio -->
-            <param name="disable-audio">true</param>
+            <param name="disable-audio">false</param>
+            <param name="enable-audio-input">false</param>
             <param name="console-audio">false</param>
             
             <!-- Client-Einstellungen -->
