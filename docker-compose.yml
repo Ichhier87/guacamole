@@ -53,6 +53,8 @@ services:
     build:
       context: ./nginx
       dockerfile: Dockerfile
+    # Immer neu bauen, sonst übernimmt "Pull and redeploy" in Portainer keine Config-Änderungen
+    pull_policy: build
     platform: linux/arm64
     container_name: nginx
     restart: unless-stopped
